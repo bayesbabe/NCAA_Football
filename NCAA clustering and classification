@@ -1,0 +1,429 @@
+#####################################
+###Hierarchical Clustering Example###
+#####################################
+
+#################
+##Ward's Method##
+#################
+
+teams=ncaa[,1]
+data=ncaa[,-1] #remove unique identifiers for teams
+hc.ward=hclust(dist(data[,c(1:14,16:18)]), method="ward") #prepare hierarchical cluster
+plot(hc.ward, hang=0.2)
+
+##Colored dendogram
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+op = par(bg = "#EFEFEF")
+A2Rplot(hc.ward, k = 3, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black"), show.labels=FALSE)
+A2Rplot(hc.ward, k = 4, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green"), show.labels=FALSE)
+A2Rplot(hc.ward, k = 5, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange"), show.labels=FALSE)
+A2Rplot(hc.ward, k = 6, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple"), show.labels=FALSE)
+A2Rplot(hc.ward, k = 7, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow"), show.labels=FALSE)
+A2Rplot(hc.ward, k = 8, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3"), show.labels=FALSE)
+
+#Looks like anywhere from 3-7 groups provides good separation
+
+#Does the hierarchical structure represent the data? Look at cophenetic correlation coefficient
+d1=dist(data[,c(1:14,16:18)])
+d2=cophenetic(hc.ward)
+c1=cor(d1,d2) #0.627 -- higher is better
+
+####################
+##Complete Linkage##
+####################
+
+data=ncaa[,-1] #remove unique identifiers for teams
+hc.comp=hclust(dist(data[,c(1:14,16:18)])) #prepare hierarchical cluster
+par(mfrow=c(2,1)) #prepare plot location to allow for two plots
+plot(hc.comp, main="Complete Linkage")
+plot(hc.ward, main="Ward's Method")
+
+##Colored dendogram
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+op = par(bg = "#EFEFEF")
+A2Rplot(hc.comp, k = 3, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black"), show.labels=FALSE)
+A2Rplot(hc.comp, k = 4, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green"), show.labels=FALSE)
+A2Rplot(hc.comp, k = 5, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange"), show.labels=FALSE)
+A2Rplot(hc.comp, k = 6, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple"), show.labels=FALSE)
+A2Rplot(hc.comp, k = 7, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow"), show.labels=FALSE)
+A2Rplot(hc.comp, k = 8, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3"), show.labels=FALSE)
+
+#Looks like 6 provides the best separation
+
+d1=dist(data[,c(1:14,16:18)])
+d2=cophenetic(hc.comp)
+c2=cor(d1,d2) #0.4810 -- higher is better
+
+####################
+##Average Linkage##
+####################
+
+data=ncaa[,-1] #remove unique identifiers for teams
+hc.avg=hclust(dist(data[,c(1:14,16:18)]), method="average") #prepare hierarchical cluster
+par(mfrow=c(2,1)) #prepare plot location to allow for two plots
+plot(hc.ward, main="Ward's Method")
+plot(hc.avg, main="Average Linkage")
+
+##Colored dendogram
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+op = par(bg = "#EFEFEF")
+A2Rplot(hc.avg, k = 3, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black"), show.labels=FALSE)
+A2Rplot(hc.avg, k = 4, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green"), show.labels=FALSE)
+A2Rplot(hc.avg, k = 5, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange"), show.labels=FALSE)
+A2Rplot(hc.avg, k = 6, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple"), show.labels=FALSE)
+A2Rplot(hc.avg, k = 7, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow"), show.labels=FALSE)
+A2Rplot(hc.avg, k = 8, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3"), show.labels=FALSE)
+A2Rplot(hc.avg, k = 9, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3"), show.labels=FALSE)
+A2Rplot(hc.avg, k = 10, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3", "white"), show.labels=FALSE)
+
+#not liking any of them...
+
+d1=dist(data[,c(1:14,16:18)])
+d2=cophenetic(hc.avg)
+c3=cor(d1,d2) #0.7799 -- higher is better
+
+
+####################
+##Median Linkage##
+####################
+
+data=ncaa[,-1] #remove unique identifiers for teams
+hc.med=hclust(dist(data[,c(1:14,16:18)]), method="median") #prepare hierarchical cluster
+par(mfrow=c(2,1)) #prepare plot location to allow for two plots
+plot(hc.med, main="Median Linkage")
+plot(hc.avg, main="Average Linkage")
+
+##Colored dendogram
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+op = par(bg = "#EFEFEF")
+A2Rplot(hc.med, k = 3, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black"), show.labels=FALSE)
+A2Rplot(hc.med, k = 4, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green"), show.labels=FALSE)
+A2Rplot(hc.med, k = 5, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange"), show.labels=FALSE)
+A2Rplot(hc.med, k = 6, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple"), show.labels=FALSE)
+A2Rplot(hc.med, k = 7, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow"), show.labels=FALSE)
+A2Rplot(hc.med, k = 8, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3"), show.labels=FALSE)
+A2Rplot(hc.med, k = 9, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3"), show.labels=FALSE)
+A2Rplot(hc.med, k = 10, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3", "white"), show.labels=FALSE)
+
+#like 10
+
+d1=dist(data[,c(1:14,16:18)])
+d2=cophenetic(hc.med)
+c4=cor(d1,d2) #0.6638 -- higher is better
+
+####################
+##Centroid Linkage##
+####################
+
+data=ncaa[,-1] #remove unique identifiers for teams
+hc.cen=hclust(dist(data[,c(1:14,16:18)]), method="centroid") #prepare hierarchical cluster
+par(mfrow=c(2,1)) #prepare plot location to allow for two plots
+plot(hc.cen, main="Centroid Linkage")
+plot(hc.avg, main="Average Linkage")
+
+##Colored dendogram
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+op = par(bg = "#EFEFEF")
+A2Rplot(hc.cen, k = 3, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black"), show.labels=FALSE)
+A2Rplot(hc.cen, k = 4, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green"), show.labels=FALSE)
+A2Rplot(hc.cen, k = 5, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange"), show.labels=FALSE)
+A2Rplot(hc.cen, k = 6, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple"), show.labels=FALSE)
+A2Rplot(hc.cen, k = 7, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow"), show.labels=FALSE)
+A2Rplot(hc.cen, k = 8, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3"), show.labels=FALSE)
+A2Rplot(hc.cen, k = 9, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3"), show.labels=FALSE)
+A2Rplot(hc.cen, k = 10, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3", "white"), show.labels=FALSE)
+
+d1=dist(data[,c(1:14,16:18)])
+d2=cophenetic(hc.cen)
+c5=cor(d1,d2) #0.7818 -- higher is better
+
+
+####################
+##Single Linkage##
+####################
+
+data=ncaa[,-1] #remove unique identifiers for teams
+hc.sin=hclust(dist(data[,c(1:14,16:18)]), method="single") #prepare hierarchical cluster
+par(mfrow=c(2,1)) #prepare plot location to allow for two plots
+plot(hc.sin, main="Single Linkage")
+plot(hc.avg, main="Average Linkage")
+
+##Colored dendogram
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+op = par(bg = "#EFEFEF")
+A2Rplot(hc.sin, k = 3, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black"), show.labels=FALSE)
+A2Rplot(hc.sin, k = 4, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green"), show.labels=FALSE)
+A2Rplot(hc.sin, k = 5, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange"), show.labels=FALSE)
+A2Rplot(hc.sin, k = 6, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple"), show.labels=FALSE)
+A2Rplot(hc.sin, k = 7, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow"), show.labels=FALSE)
+A2Rplot(hc.sin, k = 8, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3"), show.labels=FALSE)
+A2Rplot(hc.sin, k = 9, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3"), show.labels=FALSE)
+A2Rplot(hc.sin, k = 10, boxes = FALSE, col.up = "gray50", col.down = c("red", "blue", "black", "green", "orange", "purple", "yellow", "green3", "red3", "white"), show.labels=FALSE)
+
+#Don't like any of them
+
+d1=dist(data[,c(1:14,16:18)])
+d2=cophenetic(hc.sin)
+c6=cor(d1,d2) #0.506 -- higher is better
+
+##Ward's, Average, or Centroid
+
+################################
+##Principal Component Analysis##
+################################
+#http://gastonsanchez.com/blog/how-to/2012/06/17/PCA-in-R.html
+
+library(reshape2)
+library(ggplot2)
+
+##1. prcomp
+pca1=prcomp(data[,c(1:14,16:18)], scale=T) #scale standardizes the data
+names(pca1) #sdev, rotation, center, scale, x
+pca1$sdev #sqrt of eigenvalues 
+head(pca1$rotation) #loadings (eigenvectors)
+head(pca1$x) #PCs aka "scores"
+
+##2. princomp
+pca2=princomp(data[,c(1:14,16:18)], cor=TRUE)
+names(pca2) #sdev, loadings, center, scale, n.obs, scores, call
+pca2$sdev
+unclass(pca2$loadings) #loadings (eigenvectors) 
+head(pca2$scores) #PCs aka "scores" 
+#some of the loadings and PCs have different signs than prcomp (neg instead of pos and vice versa)
+
+##3. PCA {FactoMineR} -- Gives a lot more information than 1 and 2
+library(FactoMineR)
+pca3=PCA(data[,c(1:14,16:18)]) #scale.unit=TRUE is default, a graph is also default displayed
+#interesting - factor loadings are separated by mistakes (fumbles, interceptions, penalties, punts) and oppportunities (3rd down conversion rates, tds, etc)
+pca3$eig #eigenvalues for PCs, % of variance, and cumulative percentage of variance
+pca3$var$coord #correlations between variables and PCs
+head(pca3$ind$coord) #PCs aka "scores"
+barplot(pca3$eig[2], main="Essential Dimensionality", ylab="", xlab="% of Variance")
+
+##4. dudi.pca {ade4} -- has interesting graphics
+##5. acp {amap} -- nothing special
+
+###############################
+###Plotting PCA observations###
+###############################
+library(ggplot2)
+scores=as.data.frame(pca2$scores) #data frame of PCs/scores
+
+##Plot PCA1 v PCA2
+ggplot(data=scores, aes(x=Comp.1, y=Comp.2, label=rownames(scores)))+
+  geom_hline(yintercept=0, color="gray65")+
+  geom_vline(xintercept=0, color="gray65")+
+  geom_text(color="tomato", alpha=0.8, size=4)+
+  ggtitle("PCA plot of NCAA Team Statistics")
+
+##Circle of correlations -- note that PCA will create this automatically
+#function to create a circl
+circle=function(center=c(0,0), npoints=100)
+{
+  r=1
+  tt=seq(0,2*pi, length=npoints)
+  xx=center[1]+r*cos(tt)
+  yy=center[1]+r*sin(tt)
+  return(data.frame(x=xx, y=yy))
+}
+corcir=circle(c(0,0), npoints=100)
+
+#create data frame with correlations between variables and PCs
+correlations=as.data.frame(cor(data[,c(1:14,16:18)], pca2$scores))
+dim(correlations)
+
+#data frame with arrows coordinates
+arrows=data.frame(x1=c(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), y1=c(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), x2=correlations$Comp.1, y2=correlations$Comp.2)
+
+#geom_path will do open circles
+ggplot()+
+  geom_path(data=corcir, aes(x=x,  y=y), color="gray65")+
+  geom_segment(data=arrows, aes(x=x1, y=y1, xend=x2, yend=y2), color="gray65")+
+  geom_text(data=correlations, aes(x=Comp.1, y=Comp.2, label=rownames(correlations)))+
+  geom_hline(yintercept=0, color="gray65")+
+  geom_vline(xintercept=0, color="gray65")+
+  xlim(-1.1, 1.1)+
+  ylim(-1.1, 1.1)+
+  labs(x="pca1 axis", y="pc2 axis")+
+  ggtitle("Component Loading Map")
+  #theme(panel.background=element_rect(fill="grey"))
+
+###Plotting essential dimensionality
+library(plyr)
+bar.data=(as.matrix(pca3$eig[2])[1:7])
+bar.data=as.data.frame(bar.data)
+labs=c("comp1", "comp2", "comp3", "comp4", "comp5", "comp6", "comp7")
+bar.data$labs=sub("^", "", labs)
+c=ggplot(bar.data, aes(factor(labs)))
+c+geom_bar()
+
+names(bar.data)=c("pers", "labs")
+bar.data$pers=bar.data$pers/100
+
+ggplot(bar.data, aes(x=labs2, y=pers))+
+  geom_bar(stat="identity", fill="blue3", color="black") +
+  xlab("")+
+  ylab("% of Variance")+
+  ggtitle("Essential Dimensionality")+
+  coord_flip()
+
+######################
+###K-Means Analysis###
+######################
+kdata=data[,c(1:14,16:18)]
+
+km3=kmeans(kdata, 3)
+km4=kmeans(kdata, 4)
+km5=kmeans(kdata, 5)
+km6=kmeans(kdata, 6)
+km7=kmeans(kdata, 7)
+km8=kmeans(kdata, 8)
+km9=kmeans(kdata, 9)
+km10=kmeans(kdata, 10)
+km11=kmeans(kdata, 11)
+km12=kmeans(kdata, 12)
+km13=kmeans(kdata, 13)
+km14=kmeans(kdata, 14)
+km15=kmeans(kdata, 15)
+km16=kmeans(kdata, 16)
+km17=kmeans(kdata, 17)
+km18=kmeans(kdata, 18)
+km19=kmeans(kdata, 19)
+km20=kmeans(kdata, 20)
+
+###Evaluate clusters
+
+#Within groups sum of squares (plot within gps sum of squares with number of clusters)
+ss=c(km3$tot.withinss, km4$tot.withinss, km5$tot.withinss, km6$tot.withinss, km7$tot.withinss, km8$tot.withinss, km9$tot.withinss, km10$tot.withinss, km11$tot.withinss, km12$tot.withinss, km13$tot.withinss, km14$tot.withinss, km15$tot.withinss, km16$tot.withinss, km17$tot.withinss, km18$tot.withinss, km19$tot.withinss, km20$tot.withinss)
+clusters=c(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)
+dat=cbind(clusters, ss)
+dat=as.data.frame(dat)
+names(dat)=c("clusters", "ss")
+ggplot(dat, aes(x=clusters, y=ss))+
+  geom_point(shape=1)+
+  geom_line()+
+  xlab("Clusters")+
+  ylab("Within Group Sum of Squares")
+#9 looks best -- agrees with Hierarchical clustering
+kdata2=cbind(km7$cluster,km8$cluster,km9$cluster,km10$cluster,teams,kdata)
+
+
+#Cross-tab
+
+
+## K means plot against first 2 PCs
+## 10 clusters and their centers
+pca=princomp(kdata)
+px=predict(pca)
+dimnames(km10$centers)[[2]]=dimnames(kdata)[[2]]
+centers=predict(pca,km10$centers)
+plot(px[,1:2],type="n",xlab="PC1", ylab="PC2")
+text(px[,1:2],labels=km9$cluster,cex=1.5)
+points(centers[,1:2],pch=3,cex=3,col="red")
+
+## Discriminant plot
+n1=sum(ifelse(km10$cluster==1,1,0))
+n2=sum(ifelse(km10$cluster==2,1,0))
+n3=sum(ifelse(km10$cluster==3,1,0))
+n4=sum(ifelse(km10$cluster==4,1,0))
+n5=sum(ifelse(km10$cluster==5,1,0))
+n6=sum(ifelse(km10$cluster==6,1,0))
+n7=sum(ifelse(km10$cluster==7,1,0))
+n8=sum(ifelse(km10$cluster==8,1,0))
+n9=sum(ifelse(km10$cluster==9,1,0))
+n10=sum(ifelse(km10$cluster==10,1,0))
+
+X1=kdata[which(km10$cluster==1),]
+X2=kdata[which(km10$cluster==2),]
+X3=kdata[which(km10$cluster==3),]
+X4=kdata[which(km10$cluster==4),]
+X5=kdata[which(km10$cluster==5),]
+X6=kdata[which(km10$cluster==6),]
+X7=kdata[which(km10$cluster==7),]
+X8=kdata[which(km10$cluster==8),]
+X9=kdata[which(km10$cluster==9),]
+X10=kdata[which(km10$cluster==10),]
+
+
+xbar=apply(kdata,2,mean)
+x1bar=apply(X1,2,mean)
+x2bar=apply(X2,2,mean)
+x3bar=apply(X3,2,mean)
+x4bar=apply(X4,2,mean)
+x5bar=apply(X5,2,mean)
+x6bar=apply(X6,2,mean)
+x7bar=apply(X7,2,mean)
+x8bar=apply(X8,2,mean)
+x9bar=apply(X9,2,mean)
+x10bar=apply(X10,2,mean)
+
+
+E<-(n1-1)*var(X1)+(n2-1)*var(X2)+(n3-1)*var(X3)+(n4-1)*var(X4)+(n5-1)*var(X5)+(n6-1)*var(X6)+(n7-1)*var(X7)+(n8-1)*var(X8)+(n9-1)*var(X9)+(n10-1)*var(X10)
+H <- n1*c(x1bar-xbar)%*%t(x1bar-xbar) +
+  n2*c(x2bar-xbar)%*%t(x2bar-xbar) +
+  n3*c(x3bar-xbar)%*%t(x3bar-xbar) +
+  n4*c(x4bar-xbar)%*%t(x4bar-xbar) +
+  n5*c(x5bar-xbar)%*%t(x5bar-xbar) +
+  n6*c(x6bar-xbar)%*%t(x6bar-xbar) +
+  n7*c(x7bar-xbar)%*%t(x7bar-xbar) +
+  n8*c(x8bar-xbar)%*%t(x8bar-xbar) +
+  n9*c(x9bar-xbar)%*%t(x9bar-xbar) +
+  n10*c(x10bar-xbar)%*%t(x10bar-xbar)
+
+sqrtmat <- function(x){
+  junk <- eigen(x)
+  junk$vectors %*% diag(sqrt(junk$values)) %*% t(junk$vectors)
+}
+
+tempeig <- eigen(solve(sqrtmat(E)) %*% H %*% solve(sqrtmat(E)), symmetric=T)
+discfcns <- solve(sqrtmat(E)) %*% tempeig$vectors[,1:2]
+for (i in 1:ncol(discfcns)) discfcns[,i] <- discfcns[,i]/sqrt(sum(discfcns[,i]^2))
+
+discfcnscores <- as.matrix(kdata) %*% discfcns
+plot(discfcnscores[,1],discfcnscores[,2],type="n",main="K=10", xlab="Discriminant 1 Function Scores", ylab="Discriminant 2 Function Scores")
+points(discfcnscores[kdata2[,4]==1,1],discfcnscores[kdata2[,4]==1,2],
+       pch="1",col="blue")
+points(discfcnscores[kdata2[,4]==2,1],discfcnscores[kdata2[,4]==2,2],
+       pch="2")
+points(discfcnscores[kdata2[,4]==3,1],discfcnscores[kdata2[,4]==3,2],
+       pch="3",col="red")
+points(discfcnscores[kdata2[,4]==4,1],discfcnscores[kdata2[,4]==4,2],
+       pch="4",col="green")
+points(discfcnscores[kdata2[,4]==5,1],discfcnscores[kdata2[,4]==5,2],
+       pch="5",col="skyblue")
+points(discfcnscores[kdata2[,4]==6,1],discfcnscores[kdata2[,4]==6,2],
+       pch="6",col="purple")
+points(discfcnscores[kdata2[,4]==7,1],discfcnscores[kdata2[,4]==7,2],
+       pch="7",col="pink")
+points(discfcnscores[kdata2[,4]==8,1],discfcnscores[kdata2[,4]==8,2],
+       pch="8",col="brown")
+points(discfcnscores[kdata2[,4]==9,1],discfcnscores[kdata2[,4]==9,2],
+       pch="9",col="orange")
+points(discfcnscores[kdata2[,4]==10,1],discfcnscores[kdata2[,4]==10,2],
+       pch="0",col="magenta")
+
+gp1=kdata2[which(kdata2[,4]==1),] ##Army, Navy, Air Force, Virginia Military
+gp2=kdata2[which(kdata2[,4]==2),] ##Eastern Washington, Hawaii, Houston, Old Dominion
+gp3=kdata2[which(kdata2[,4]==3),] ##Alabama St, Georgia Tech... mostly east and south schools
+gp4=kdata2[which(kdata2[,4]==4),] ##Utah, TCU, Idaho, Colorado, Colorado St, UCLA, Alabama 
+gp5=kdata2[which(kdata2[,4]==5),] ##Stanford, Ball State, Maryland
+gp6=kdata2[which(kdata2[,4]==6),]  
+gp7=kdata2[which(kdata2[,4]==7),] ##Auburn, Florida, LSU, Michigan, Ohio
+gp8=kdata2[which(kdata2[,4]==8),] ##Texas Tech
+gp9=kdata2[which(kdata2[,4]==9),] ##Baylor, Boise St, BYU, Florida St, Notre Dame
+gp10=kdata2[which(kdata2[,4]==10),] ##Baylor, Boise St, BYU, Florida St, Notre Dame
+
+############################
+###Discriminant Analysis####
+############################
+library(MASS)
+gp10=kdata2[,4]
+X=kdata2[,6:22]
+
+###LINEAR DISCRIMINANT ANALYSIS
+##lda=linear discriminant analysis, CV=true generates "leave one out" predictions
+fitl<-lda(gp10~rush_yds_per_att+rush_tds+pass_yds_per_att+pass_comp_rt+pass_yds+pass_tds+ints+points+punts+yds_per_kickoff+fumbles+tfl_yds+sack_yds+forced_fums+penalties+third_down_conv_rt+fourth_down_att, data=kdata2, na.action="na.omit", CV=TRUE)
+##assess the accuracy of the model
+ctl=table(gp10,fitl$class)
+diag(prop.table(ctl,1))
+sum(diag(prop.table(ctl))) ##86% accuracy -- pretty good
